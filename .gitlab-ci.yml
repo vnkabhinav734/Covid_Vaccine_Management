@@ -1,0 +1,31 @@
+image: gradle:alpine
+
+stages:          
+  - build
+  - test
+  - deploy
+
+variables:
+    GRADLE_OPTS : "-Dorg.gradle.daemon=false"
+    GIT_STRATEGY: clone
+
+
+build:
+  stage: build
+  tags:
+    - ugrad
+  script: 
+    - mvn compile
+  only:
+    refs:
+      - branches
+
+test:
+  stage: test
+  tags:
+    - ugrad
+  script: 
+    - mvn clean test 
+  only:
+    refs:
+      - branches
